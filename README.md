@@ -153,6 +153,14 @@ take advantage of transparency.
 >>> number.png('big-number.png')
 >>> life.png('sketch.png', scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc])
 ```
+
+You can also render the QR Code to a BytesIO as PNG data.
+
+```python
+>>> number.bytes('big-number.png')
+>>> life.bytes('sketch.png', scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc])
+```
+
 Finally, there is a text based renderer. This will output the QR code as a
 string of 1's and 0's, with each row of the code on a new line.
 
