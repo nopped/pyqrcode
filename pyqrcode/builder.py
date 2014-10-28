@@ -1091,8 +1091,27 @@ def _png(code, version, file, scale=1, module_color=None, background=None):
     code = scale_code(code)
 
     #Write out the PNG
-    with _get_file(file, 'wb') as f:
-        w = png.Writer(width=size, height=size, greyscale=greyscale,
-                       palette=palette, bitdepth=1)
+    png_writer = png.Writer(width=size, height=size, greyscale=greyscale,
+                   palette=palette, bitdepth=1)
 
-        w.write(f, code)
+    # Save it to a file
+    if file:
+        with _get_file(file, 'wb') as f:
+            png_writer = png.Writer(width=size, height=size, greyscale=greyscale,
+                           palette=palette, bitdepth=1)
+
+            png_writer.write(f, code)
+
+    # If file name is None, return QR code as BytesIO
+    png_bytes = io.BytesIO()
+    png_writer.write(png_bytes, code)
+    png_bytes.seek(0)
+    return png_bytes
+
+def _bytes(code, version, scale=1, module_color=None, background=None):
+    return _png(code         = code,
+                version      = version,
+                file         = None,
+                scale        = scale,
+                module_color = module_color,
+                background   = background)

@@ -324,3 +324,46 @@ class QRCode:
             >>> print(text)
         """
         return builder._text(self.code)
+
+    def bytes(self, scale=1, module_color=None, background=None):
+        """This method writes the QR code out as an PNG image into bytes. The resulting
+        PNG has a bit depth of 1. The file parameter is used to specify where
+        to write the image to. It can either be an writable stream or a
+        file path.
+
+        .. note::
+            This method depends on the pypng module to actually create the
+            PNG file.
+
+        This method will write the given *file* out as a PNG file. The file
+        can be either a string file path, or a writable stream.
+
+        The *scale* parameter sets how large to draw a single module. By
+        default one pixel is used to draw a single module. This may make the
+        code too small to be read efficiently. Increasing the scale will make
+        the code larger. Only integer scales are usable. This method will
+        attempt to coerce the parameter into an integer (e.g. 2.5 will become 2,
+        and '3' will become 3).
+
+        The *module_color* parameter sets what color to use for the encoded
+        modules (the black part on most QR codes). The *background* parameter
+        sets what color to use for the background (the white part on most
+        QR codes). If either parameter is set, then both must be
+        set or a ValueError is raised. Colors should be specified as either
+        a list or a tuple of length 3 or 4. The components of the list must
+        be integers between 0 and 255. The first three member give the RGB
+        color. The fourth member gives the alpha component, where 0 is
+        transparent and 255 is opaque. Note, many color
+        combinations are unreadable by scanners, so be careful.
+
+
+
+        Example:
+            >>> code = pyqrcode.create('Are you suggesting coconuts migrate?')
+            >>> code.bytes(scale=5)
+            >>> code.bytes(scale=5,
+                         module_color=(0x66, 0x33, 0x0),      #Dark brown
+                         background=(0xff, 0xff, 0xff, 0x88)) #50% transparent white
+        """
+        return builder._bytes(self.code, self.version, scale,
+                              module_color, background)
