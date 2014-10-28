@@ -1,7 +1,7 @@
 pyqrcode
 ================================
 
-* Added support to return QR code as BytesIO
+[Added support to return QR code as BytesIO]
 
 The pyqrcode module is a QR code generator that is simple to use and written
 in pure python 3. The module can automate most of the building process for you.
